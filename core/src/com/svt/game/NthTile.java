@@ -32,6 +32,7 @@ public class NthTile {
 		this.height=height;
 		this.type=type;
 		this.setBounds();
+		System.out.println("text");
 	}
 	
 	
