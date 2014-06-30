@@ -1,0 +1,54 @@
+# Blender MTL File: 'tent4.blend'
+# Material Count: 5
+
+newmtl Material.002
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.169350 0.287012 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd leather1.png
+
+newmtl bone
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.848571 0.848571 0.848571
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bone.jpg
+
+newmtl floor
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.366024 0.210849 0.080077
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Ka patchGrass.jpg
+map_Kd patchGrass.jpg
+map_d patchGrass.jpg
+
+newmtl log
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.366531 0.366531 0.366531
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd log.jpg
+
+newmtl top
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.633750 0.633750 0.633750
+Ks 0.265625 0.265625 0.265625
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd leather1.png
