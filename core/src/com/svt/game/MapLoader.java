@@ -44,7 +44,7 @@ public class MapLoader {
 					type=NthTile.GRASS;
 					active=false;
 					break;
-				case "85":
+				case "84":
 					type=NthTile.GRASS2;
 					break;
 				case "5":

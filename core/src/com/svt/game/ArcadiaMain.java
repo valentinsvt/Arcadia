@@ -29,8 +29,8 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 	public Array<Texture> textures = new Array<Texture>(); /*texturas para renderisar el mapa*/
 	public Array<String> assetsNames;
 	PerspectiveCamera cam;
-	int size_x=149;
-	int size_y=150;
+	int size_x=50;
+	int size_y=50;
 	public NthTile[][] tiles = new NthTile[size_x][size_y];
 	final Matrix4 matrix = new Matrix4();
 	final Plane xzPlane = new Plane(new Vector3(0, 1, 0), 0);
@@ -127,7 +127,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 			doneLoading = assets.update();
 		}
 		/*mapas*/
-		nivel=new MapLoader(size_x, size_y, "maps/nivel1.txt");
+		nivel=new MapLoader(size_x, size_y, "maps/nivel2.txt");
 		nivel.setAsset(assets);
 		nivel.setNames(assetsNames);
 		tiles=nivel.getTiles(tiles);
