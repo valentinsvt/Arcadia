@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Plane;
@@ -57,8 +58,11 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 	/*fin controles*/
 	/*mapa*/
 	MapLoader nivel;
-	
-	
+	/*Animation*/
+	AnimationController controller;
+	boolean animationUpdate = false;
+
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -96,31 +100,32 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		assetsNames.add("luz_tree_01/luz_tree_01.g3db");
 		assetsNames.add("svtTree/tree.g3db");
 		assetsNames.add("mountain/mountain.g3db");
+		assetsNames.add("miniMan/mini_man_jump.g3db");
 		for(int i=0;i<assetsNames.size;i++){
 			assets.load(assetsNames.get(i), Model.class);
 		}
-		
+
 		/*controles*/
 		menu = new Rectangle();
 		menu.x = -410;
 		menu.y = 250;
 		menu.width = 827;
 		menu.height = 20;
-		
+
 		buildButon = new Rectangle();
 		buildButon.x=-410;
 		buildButon.y=250;
 		buildButon.width=20;
 		buildButon.height=20;
-		
+
 		exitButon = new Rectangle();
 		exitButon.x=387;
 		exitButon.y=250;
 		exitButon.width=30;
 		exitButon.height=20;
-		
+
 		overLayCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+
 		barraMenu = new Texture("textures/menuBar.png");
 		boolean doneLoading=false;
 		while(!doneLoading){
@@ -132,16 +137,17 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		nivel.setNames(assetsNames);
 		tiles=nivel.getTiles(tiles);
 		instances=nivel.getInstances();
-		
+
 	}
 
 	@Override
 	public void render () {
-		
+
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);		
 		cam.update();
 		overLayCam.update();
+
 		batch.setProjectionMatrix(cam.combined);
 		batch.setTransformMatrix(matrix);
 		batch.begin();
@@ -158,22 +164,24 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		checkTileTouched();
 
 		/*3d*/
-
+		if(animationUpdate)
+			controller.update(Gdx.graphics.getDeltaTime());
 		if(instances.size > 0){
+
 			modelBatch.begin(cam);
 			modelBatch.render(instances, environment);
 			modelBatch.end();
 		}
-		
-		
+
+
 		/*controles*/
-		
+
 		batchMenu.setProjectionMatrix(overLayCam.combined);
 		batchMenu.begin();
 		//100mx100m texture in world coordinates
 		batchMenu.draw(barraMenu, menu.x,menu.y);
 		batchMenu.end();
-		
+
 	}
 
 
@@ -182,9 +190,11 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		//ModelLoader loader = new G3dModelLoader();
 		//Model model = loader.loadModel(Gdx.files.internal("svtTree/tree.obj"));	
 
-		Model model = assets.get("mountain/mountain.g3db", Model.class);
+		Model model = assets.get("miniMan/mini_man_jump.g3db", Model.class);
 		ModelInstance mi =   new ModelInstance(model);	
-		//System.out.println("materials "+mi.materials.get(0).id+"  "+mi.materials.get(1).id+" "+mi.materials.get(2).id);
+		//System.out.println("insert "+mi.animations.get(0).id);
+
+
 		for(int i=0;i<mi.materials.size;i++){
 			//System.out.println("material *"+mi.materials.get(i).id+"*");
 			if(mi.materials.get(i).id.equalsIgnoreCase("lambert3SG")){
@@ -198,6 +208,9 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		//mi.transform.rotate(Vector3.Y, 135);
 		//mi.transform.scale(0.05f, 0.05f, 0.05f);
 		mi.transform.scale(0.2f, 0.2f, 0.2f);
+		controller = new AnimationController(mi);
+		controller.setAnimation("mini_man_jump",-1);
+        animationUpdate=true;
 		instances.add(mi);
 	}
 
@@ -211,7 +224,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 			if(x >= 0 && x < size_x && z >= 0 && z < size_y) {				
 				NthTile tile = tiles[x][z];
 				tile.setColor(1, 0, 0, 1);
-				//insertModel(tile);
+				insertModel(tile);
 				//tile.setTextureIndex(0);
 			}
 
@@ -250,7 +263,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		if(click.overlaps(exitButon)){
 			System.exit(0);
 		}
-		
+
 		return false;
 	}
 
@@ -283,7 +296,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 
 	@Override
 	public boolean scrolled(int amount) {
-		
+
 		zoomingQuantity+=amount;
 		if(zoomingQuantity>maxScroll)
 			zoomingQuantity=maxScroll;
@@ -292,7 +305,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		//System.out.println("scroll "+zoomingQuantity);
 		//rotate
 		//cam.rotate(zoomingQuantity, 0, 1, 0);
-		
+
 		//cam.translate(cam.position.x, cam.position.y+zoomingQuantity, cam.position.z);
 		cam.fieldOfView=zoomingQuantity;
 		return false;
