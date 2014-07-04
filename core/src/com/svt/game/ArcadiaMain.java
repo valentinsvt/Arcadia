@@ -61,7 +61,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 	/*Animation*/
 	AnimationController controller;
 	boolean animationUpdate = false;
-
+    Mob mob;
 
 	@Override
 	public void create () {
@@ -138,6 +138,28 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		tiles=nivel.getTiles(tiles);
 		instances=nivel.getInstances();
 
+		
+		/*models*/
+		Model model = assets.get("miniMan/mini_man_jump.g3db", Model.class);
+		ModelInstance mi =   new ModelInstance(model);	
+		
+		Vector3 touchPos = new Vector3();
+		touchPos.set(0, 0, 0);
+		mi.transform.setToTranslation(touchPos.x,0,touchPos.y);
+		mi.transform.rotate(Vector3.Y, 45);
+		mi.transform.scale(0.2f, 0.2f, 0.2f);
+	
+		controller = new AnimationController(mi);
+		controller.setAnimation("mini_man_jump",-1);
+		mob=new Mob(touchPos.x,0,touchPos.y,mi,controller);
+		mob.setSpeed(0.02f);
+        animationUpdate=true;
+       
+		//instances.add(mi);
+		
+		
+		
+		
 	}
 
 	@Override
@@ -166,13 +188,15 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		/*3d*/
 		if(animationUpdate)
 			controller.update(Gdx.graphics.getDeltaTime());
+		//System.out.println("fr"+Gdx.graphics.getFramesPerSecond ());
 		if(instances.size > 0){
 
 			modelBatch.begin(cam);
 			modelBatch.render(instances, environment);
+			modelBatch.render(mob.model,environment);
 			modelBatch.end();
 		}
-
+		mob.update(Gdx.graphics.getDeltaTime());
 
 		/*controles*/
 
@@ -224,7 +248,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 			if(x >= 0 && x < size_x && z >= 0 && z < size_y) {				
 				NthTile tile = tiles[x][z];
 				tile.setColor(1, 0, 0, 1);
-				insertModel(tile);
+				//insertModel(tile);
 				//tile.setTextureIndex(0);
 			}
 

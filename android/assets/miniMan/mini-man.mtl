@@ -1,0 +1,33 @@
+newmtl initialShadingGroup
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 0.55 0.55 0.55
+map_Kd mini-man_TopView.jpg
+Ni 1.00
+newmtl lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 0.70 0.70 0.70
+map_Kd mini-man_FrontView.jpg
+Ni 1.00
+newmtl lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 0.56 0.56 0.56
+map_Kd mini-man_SideView.jpg
+Ni 1.00
+newmtl lambert5SG
+illum 4
+Kd 0.39 0.22 0.50
+Ka 0.00 0.00 0.00
+Tf 0.70 0.70 0.70
+Ni 1.00
