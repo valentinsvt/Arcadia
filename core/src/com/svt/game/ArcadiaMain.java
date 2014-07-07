@@ -152,7 +152,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		controller = new AnimationController(mi);
 		controller.setAnimation("mini_man_jump",-1);
 		mob=new Mob(touchPos.x,0,touchPos.y,mi,controller);
-		mob.setSpeed(0.02f);
+		mob.setSpeed(0.005f);
         animationUpdate=true;
        
 		//instances.add(mi);
@@ -196,7 +196,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 			modelBatch.render(mob.model,environment);
 			modelBatch.end();
 		}
-		mob.update(Gdx.graphics.getDeltaTime());
+		mob.update(Gdx.graphics.getFramesPerSecond());
 
 		/*controles*/
 
