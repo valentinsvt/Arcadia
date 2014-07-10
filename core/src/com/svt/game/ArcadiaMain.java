@@ -101,6 +101,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		assetsNames.add("svtTree/tree.g3db");
 		assetsNames.add("mountain/mountain.g3db");
 		assetsNames.add("miniMan/mini_man_jump.g3db");
+		assetsNames.add("caveman/caveman.g3db");
 		for(int i=0;i<assetsNames.size;i++){
 			assets.load(assetsNames.get(i), Model.class);
 		}
@@ -140,7 +141,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 
 		
 		/*models*/
-		Model model = assets.get("miniMan/mini_man_jump.g3db", Model.class);
+		Model model = assets.get("caveman/caveman.g3db", Model.class);
 		ModelInstance mi =   new ModelInstance(model);	
 		
 		Vector3 touchPos = new Vector3();
@@ -148,9 +149,9 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		mi.transform.setToTranslation(touchPos.x,0,touchPos.y);
 		mi.transform.rotate(Vector3.Y, 45);
 		mi.transform.scale(0.2f, 0.2f, 0.2f);
-	
-		controller = new AnimationController(mi);
-		controller.setAnimation("mini_man_jump",-1);
+		System.out.println(""+mi.animations.get(0).id);
+		//controller = new AnimationController(mi);
+		//controller.setAnimation("caveman_rigging_OK_hair_walk2_OK_no_bgs",-1);
 		mob=new Mob(touchPos.x,0,touchPos.y,mi,controller);
 		mob.setSpeed(0.005f);
         animationUpdate=true;
@@ -186,8 +187,8 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		checkTileTouched();
 
 		/*3d*/
-		if(animationUpdate)
-			controller.update(Gdx.graphics.getDeltaTime());
+		//if(animationUpdate)
+			//controller.update(Gdx.graphics.getDeltaTime());
 		//System.out.println("fr"+Gdx.graphics.getFramesPerSecond ());
 		if(instances.size > 0){
 
