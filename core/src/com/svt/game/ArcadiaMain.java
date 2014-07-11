@@ -101,7 +101,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		assetsNames.add("svtTree/tree.g3db");
 		assetsNames.add("mountain/mountain.g3db");
 		assetsNames.add("miniMan/mini_man_jump.g3db");
-		assetsNames.add("caveman/caveman.g3db");
+		assetsNames.add("caveman/caveman2.g3db");
 		for(int i=0;i<assetsNames.size;i++){
 			assets.load(assetsNames.get(i), Model.class);
 		}
@@ -141,20 +141,23 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 
 		
 		/*models*/
-		Model model = assets.get("caveman/caveman.g3db", Model.class);
+		Model model = assets.get("caveman/caveman2.g3db", Model.class);
 		ModelInstance mi =   new ModelInstance(model);	
 		
 		Vector3 touchPos = new Vector3();
 		touchPos.set(0, 0, 0);
-		mi.transform.setToTranslation(touchPos.x,0,touchPos.y);
-		mi.transform.rotate(Vector3.Y, 45);
+		cam.unproject(touchPos);
+		System.out.println("!!! x "+touchPos.x+" "+touchPos.y+"  "+touchPos.z);
+		mi.transform.setToTranslation(0,0,0);
+		//mi.transform.rotate(Vector3.Y, 90);
 		mi.transform.scale(0.2f, 0.2f, 0.2f);
-		System.out.println(""+mi.animations.get(0).id);
-		//controller = new AnimationController(mi);
-		//controller.setAnimation("caveman_rigging_OK_hair_walk2_OK_no_bgs",-1);
+		controller = new AnimationController(mi);		
 		mob=new Mob(touchPos.x,0,touchPos.y,mi,controller);
-		mob.setSpeed(0.005f);
-        animationUpdate=true;
+		mob.setSpeed(1);
+		mob.setAnimation("caveman_rigging_OK_hair_walk2_OK_no_bgs",-1);
+		mob.setTarget(31, 0, 31);
+	
+        
        
 		//instances.add(mi);
 		
@@ -187,8 +190,7 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		checkTileTouched();
 
 		/*3d*/
-		//if(animationUpdate)
-			//controller.update(Gdx.graphics.getDeltaTime());
+	
 		//System.out.println("fr"+Gdx.graphics.getFramesPerSecond ());
 		if(instances.size > 0){
 
@@ -280,7 +282,12 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 
 		Vector3 touchPos = new Vector3();
 		touchPos.set(x, y, 0);
+		System.out.println("x "+x+" y "+y+" z ");
+		cam.unproject(touchPos);
+		System.out.println("x2 "+touchPos.x+" y2 "+touchPos.y+ " z2 "+touchPos.z);
+		mob.toogle();
 		overLayCam.unproject(touchPos);
+		System.out.println("x3 "+touchPos.x+" y3 "+touchPos.y+ " z3 "+touchPos.z);
 		Rectangle click = new Rectangle(touchPos.x,touchPos.y,1,1);
 		if(click.overlaps(buildButon)){
 			build=true;
