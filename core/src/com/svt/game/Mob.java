@@ -69,7 +69,7 @@ public class Mob {
 	public void Move(){
 		this.move=true;
 	}
-	public void setTarget(int x,int y, int z){
+	public void setTarget(float x,float y, float z){
 		target=new Vector3();
 		this.target.x=x;this.target.y=y;this.target.z=z;
 	}
@@ -91,7 +91,7 @@ public class Mob {
 		//System.out.println("delta "+delta);
 		if(move){
 			if(delta>50){
-				//System.out.println("current pos "+this.x+"  "+this.z);
+				
 				//System.out.println("target pos "+target.x+"  "+target.z);
 				if(target.x>x)
 					this.x=(float) this.x+(speed/delta);
@@ -101,6 +101,7 @@ public class Mob {
 					this.z=(float) this.z+(speed/delta);
 				else
 					this.z=(float) this.z+(speed/delta);
+				System.out.println("current pos "+this.x+"  "+this.z);
 				this.model.transform.translate(this.x,this.y,this.z);
 			}
 		}

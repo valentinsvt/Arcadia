@@ -152,10 +152,10 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		//mi.transform.rotate(Vector3.Y, 90);
 		mi.transform.scale(0.2f, 0.2f, 0.2f);
 		controller = new AnimationController(mi);		
-		mob=new Mob(touchPos.x,0,touchPos.y,mi,controller);
-		mob.setSpeed(1);
+		mob=new Mob(0,0,0,mi,controller);
+		mob.setSpeed(1*0.2f);
 		mob.setAnimation("caveman_rigging_OK_hair_walk2_OK_no_bgs",-1);
-		mob.setTarget(31, 0, 31);
+		mob.setTarget(31*0.2f, 0, 31*0.2f);
 	
         
        
@@ -284,10 +284,10 @@ public class ArcadiaMain implements ApplicationListener, InputProcessor{
 		touchPos.set(x, y, 0);
 		System.out.println("x "+x+" y "+y+" z ");
 		cam.unproject(touchPos);
-		System.out.println("x2 "+touchPos.x+" y2 "+touchPos.y+ " z2 "+touchPos.z);
+		//System.out.println("x2 "+touchPos.x+" y2 "+touchPos.y+ " z2 "+touchPos.z);
 		mob.toogle();
 		overLayCam.unproject(touchPos);
-		System.out.println("x3 "+touchPos.x+" y3 "+touchPos.y+ " z3 "+touchPos.z);
+		//System.out.println("x3 "+touchPos.x+" y3 "+touchPos.y+ " z3 "+touchPos.z);
 		Rectangle click = new Rectangle(touchPos.x,touchPos.y,1,1);
 		if(click.overlaps(buildButon)){
 			build=true;
